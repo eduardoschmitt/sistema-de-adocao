@@ -1,3 +1,4 @@
+package conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,7 +8,7 @@ public class Conexao {
     public static Connection getConexao() {
         String url = "jdbc:mysql://localhost/sysadocao";
         String usuario = "root";
-        String senha = "12345";
+        String senha = "admin";
         Connection connection = null;
 
         try {
