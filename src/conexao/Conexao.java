@@ -8,7 +8,7 @@ public class Conexao {
     public static Connection getConexao() {
         String url = "jdbc:mysql://localhost/sysadocao";
         String usuario = "root";
-        String senha = "admin";
+        String senha = "12345";
         Connection connection = null;
 
         try {

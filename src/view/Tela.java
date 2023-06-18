@@ -23,16 +23,17 @@ public class Tela extends JFrame{
 	List<AbstractTela> telas = new ArrayList<>();
 	TelaEstado telaEstado = new TelaEstado("Estado");
 	TelaCidade telaCidade = new TelaCidade("Cidade");
+	TelaEspecies telaEspecies = new TelaEspecies("Especies");
 	
 
 	public Tela() {
 		telas.add(telaEstado);
 		telas.add(telaCidade);
+		telas.add(telaEspecies);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		carregarTelas();
-		
 		this.setVisible(true);
 	}
 	
@@ -41,16 +42,16 @@ public class Tela extends JFrame{
 		menuBar = new JMenuBar();
 		JMenu menuEndereco = getMenu("Estado", telaEstado);
 		JMenu menuCidade = getMenu("Cidade", telaCidade);
+		JMenu menuCadastrar = getMenuCadastro("Cadastrar", telaEspecies);
 		
 		menuBar.add(menuEndereco);
 		menuBar.add(menuCidade);
+		menuBar.add(menuCadastrar);
 		setJMenuBar(menuBar);
 		
 		telaInicial = new JPanel();
 		telaInicial.setBounds(0, 0, 1200, 600);
-		
 		telaInicial.setVisible(true);
-		
 		this.add(telaInicial);
 
 		telaEstado.setBounds(0,0,1200,600);
@@ -58,6 +59,9 @@ public class Tela extends JFrame{
 		
 		telaCidade.setBounds(0,0,1200,600);
 		telaInicial.add(telaCidade);
+		
+		telaEspecies.setBounds(0, 0, 1200, 600);
+        telaInicial.add(telaEspecies);
 	}
 	
 	public JMenu getMenu(String texto, AbstractTela tela){
@@ -68,6 +72,18 @@ public class Tela extends JFrame{
 		
 		return menu;
 	}
+	
+    public JMenu getMenuCadastro(String texto, AbstractTela tela) {
+        JMenu menu = new JMenu(texto);
+        JMenuItem item = new JMenuItem("Espécie");
+        JMenuItem item1 = new JMenuItem("Raça");
+        JMenuItem item2 = new JMenuItem("Pessoa");
+        item.addActionListener(getActionTela(tela));
+        menu.add(item);
+        menu.add(item1);
+        menu.add(item2);
+        return menu;
+    }
 	
 	public ActionListener getActionTela(AbstractTela tela) {
 		ActionListener action = new ActionListener() {
