@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-public class EstadoTableModel extends AbstractTableModel{
+public class CidadeTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private List<Estado> lista;
-    private String[] colunas = {"id", "Sigla", "Nome"};
+	private List<Cidade> lista;
+    private String[] colunas = {"id", "Nome", "Estado"};
 
-    public EstadoTableModel(List<Estado> lista) {
+    public CidadeTableModel(List<Cidade> lista) {
         this.lista = lista;
     }
 
@@ -32,16 +32,16 @@ public class EstadoTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int row, int column) {
-        Estado objeto = lista.get(row);
+        Cidade objeto = lista.get(row);
 
         // Retorne o valor correspondente à célula na linha e coluna especificadas
         switch (column) {
             case 0:
                 return objeto.getId();
             case 1:
-                return objeto.getSigla();
-            case 2:
                 return objeto.getNome();
+            case 2:
+                return objeto.getEstado();
             default:
                 return null;
         }

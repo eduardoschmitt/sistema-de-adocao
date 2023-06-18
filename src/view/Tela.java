@@ -2,6 +2,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,9 +19,15 @@ public class Tela extends JFrame{
 	
 	JPanel telaInicial;
 	JMenuBar menuBar;
+	
+	List<AbstractTela> telas = new ArrayList<>();
 	TelaEstado telaEstado = new TelaEstado("Estado");
+	TelaCidade telaCidade = new TelaCidade("Cidade");
+	
 
 	public Tela() {
+		telas.add(telaEstado);
+		telas.add(telaCidade);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -32,8 +40,10 @@ public class Tela extends JFrame{
 		
 		menuBar = new JMenuBar();
 		JMenu menuEndereco = getMenu("Estado", telaEstado);
+		JMenu menuCidade = getMenu("Cidade", telaCidade);
 		
 		menuBar.add(menuEndereco);
+		menuBar.add(menuCidade);
 		setJMenuBar(menuBar);
 		
 		telaInicial = new JPanel();
@@ -45,9 +55,12 @@ public class Tela extends JFrame{
 
 		telaEstado.setBounds(0,0,1200,600);
 		telaInicial.add(telaEstado);
+		
+		telaCidade.setBounds(0,0,1200,600);
+		telaInicial.add(telaCidade);
 	}
 	
-	public JMenu getMenu(String texto, JPanel tela){
+	public JMenu getMenu(String texto, AbstractTela tela){
 		JMenu menu = new JMenu(texto);
 		JMenuItem item = new JMenuItem("Lista");
 		item.addActionListener(getActionTela(tela));
@@ -56,15 +69,23 @@ public class Tela extends JFrame{
 		return menu;
 	}
 	
-	public ActionListener getActionTela(JPanel tela) {
+	public ActionListener getActionTela(AbstractTela tela) {
 		ActionListener action = new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				esconderTelas();
+				tela.remontaTable();
 				tela.setVisible(true);
 			}
 		};
 		return action;
+	}
+	
+	public void esconderTelas() {
+		for(JPanel tela: telas) {
+			tela.setVisible(false);
+		}
 	}
 	
 }

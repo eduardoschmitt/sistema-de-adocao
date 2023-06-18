@@ -4,9 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +12,25 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import cadastro.TablePage;
+import dao.CidadeDao;
 import dao.EstadoDao;
+import model.Cidade;
+import model.CidadeTableModel;
 import model.Estado;
 import model.EstadoTableModel;
 
-public class TelaEstado extends AbstractTela{
-	EstadoTableModel tableModel;
+public class TelaCidade extends AbstractTela {
+	
+	private static final long serialVersionUID = 1L;
+	
+	CidadeTableModel tableModel;
 	JButton btnFechar;
 	JButton btnExcluir;
 	JButton btnAlterar;
 	JButton btnInserir;
 	TablePage panelTable;
 	
-	public TelaEstado(String header) {
+	public TelaCidade(String header) {
 		
 		montaTable();
 		
@@ -63,7 +66,7 @@ public class TelaEstado extends AbstractTela{
 				int row = tabela.getSelectedRow();
 				String idStr = String.valueOf(tableModel.getValueAt(row, 0));
 				try{
-					EstadoDao.delete(Integer.parseInt(idStr));
+					CidadeDao.delete(Integer.parseInt(idStr));
 					remontaTable();
 				}catch(Exception error) {
 					
@@ -115,10 +118,10 @@ public class TelaEstado extends AbstractTela{
 		});
 		this.add(btnFechar);
 	}
-
+	
 	@Override
 	public void abreTelaCadastro(Integer id) {
-		TelaEstadoCadastro telaCadastro = new TelaEstadoCadastro(id, this);
+		TelaCidadeCadastro telaCadastro = new TelaCidadeCadastro(id, this);
 		telaCadastro.addComponentListener(new ComponentListener() {
 			
 			@Override
@@ -138,16 +141,16 @@ public class TelaEstado extends AbstractTela{
 		
 	}
 	
-	public EstadoTableModel getTableModel() {
-		List<Estado> estados = new ArrayList<>();
+	public CidadeTableModel getTableModel() {
+		List<Cidade> cidades = new ArrayList<>();
 		try {
-			estados = EstadoDao.get();
+			cidades = CidadeDao.get();
 		}catch(Exception e) {
 			
 		}
 		
-		EstadoTableModel tableModel = new EstadoTableModel(estados);
+		tableModel = new CidadeTableModel(cidades);
 		return tableModel;
 	}
-	
+
 }

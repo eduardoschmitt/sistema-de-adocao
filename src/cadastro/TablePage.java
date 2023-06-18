@@ -41,8 +41,6 @@ public class TablePage extends JPanel {
 		return tabela;
 	}
 	
-	
-	
 	public void setTableModel(AbstractTableModel tableModel) {
 		this.tableModel = tableModel;
 	}

@@ -34,6 +34,9 @@ public class Estado {
 	public static String[] getColunas() {
 		return colunas;
 	}
-	
+	@Override
+	public String toString() {
+		return sigla + " - " + nome;
+	}
 	
 }
