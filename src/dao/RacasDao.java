@@ -8,24 +8,25 @@ import java.util.List;
 
 import conexao.Conexao;
 import model.Cidade;
-import model.Estado;
+import model.Especies;
+import model.Racas;
 
-public class CidadeDao {
-	public static List<Cidade> get() throws Exception {
+public class RacasDao {
+	public static List<Racas> get() throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			List<Cidade> cidades = new ArrayList<>();
-			st = connection.prepareStatement("select cid.id, estado_id, est.sigla, est.nome nomeEstado, cid.nome nomeCidade from cidade cid "
-					+ " left join estado est on est.id = cid.estado_id ");
+			List<Racas> raca = new ArrayList<>();
+			st = connection.prepareStatement("select ra.id, ra.nome, esp.nome_especie from racas ra "
+					+ " left join especies esp on ra.id_especies = esp.id ");
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
-				Estado estado = new Estado(rs.getInt("estado_id"), rs.getString("sigla"), rs.getString("nomeEstado"));
-				Cidade cidade = new Cidade(rs.getInt("id"), estado, rs.getString("nomeCidade"));
-				cidades.add(cidade);
+				Especies especies = new Especies(rs.getInt("ID"), rs.getString("Nome_Especie"));
+				Racas racas = new Racas(rs.getInt("id"), especies, rs.getString("nome"));
+				raca.add(racas);
 			}
-			return cidades;
+			return raca;
 		}catch(Exception e) {
 			throw new Exception(e);
 		}finally {
@@ -43,7 +44,7 @@ public class CidadeDao {
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("delete from cidade where id=?");
+			st = connection.prepareStatement("delete from racas where id=?");
 			st.setInt(1, id);
 			st.execute();
 		}catch(Exception e) {
@@ -58,32 +59,35 @@ public class CidadeDao {
 		}
 	}
 	
-	public static void insert(Cidade cidade) throws Exception {
+	public static void insert(Racas racas) throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;
 		try {
+			System.out.println("Chegou aqui");
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("insert into cidade (estado_id, nome) values (?,?)");
-			st.setInt(1, cidade.getEstado().getId());
-			st.setString(2, cidade.getNome());
+			st = connection.prepareStatement("insert into racas (nome, id_especies) values (?,?)");
+			st.setString(1, racas.getNome());
+			st.setInt(2, racas.getEspecies().getId());
+			System.out.println("Espécie id: " + racas.getEspecies().getId());
+			System.out.println("Nome Raça: " + racas.getNome());
 			st.execute();
 		}catch(Exception e) {
-			throw new Exception(e);
+			System.err.println("Erro durante a inserção de raças: " + e.getMessage());
+	        throw new Exception("Erro durante a inserção de raças", e);
 		}
 	}
 	
-	public static void update(int id, Cidade cidade) throws Exception {
+	public static void update(int id, Racas racas) throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("update cidade set estado_id=?, nome=? where id=?");
-			st.setInt(1, cidade.getEstado().getId());
-			st.setString(2, cidade.getNome());
+			st = connection.prepareStatement("update racas set id_especies = ?, nome = ? where id = ?");
+			st.setInt(1, racas.getEspecies().getId());
+			st.setString(2, racas.getNome());
 			st.setInt(3, id);
 			st.execute();
 		}catch(Exception e) {
-			e.printStackTrace();
 			throw new Exception(e);
 		}finally {
 			if(connection!=null) {
@@ -94,6 +98,5 @@ public class CidadeDao {
 			}
 		}
 	}
-	
 	
 }

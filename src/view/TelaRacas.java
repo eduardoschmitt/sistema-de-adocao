@@ -9,51 +9,46 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import cadastro.TablePage;
-import dao.EspeciesDao;
-import model.Especies;
-import model.EspeciesTableModel;
+import dao.CidadeDao;
+import dao.RacasDao;
+import model.Racas;
+import model.RacasTableModel;
 
-public class TelaEspecies extends AbstractTela {
+public class TelaRacas extends AbstractTela {
+
 	
-	private static final long serialVersionUID = 1L;
-	
-	EspeciesTableModel tableModel;
+	RacasTableModel tableModel;
 	JButton btnFechar;
 	JButton btnExcluir;
 	JButton btnAlterar;
 	JButton btnInserir;
 	TablePage panelTable;
 	
-	public TelaEspecies(String header) {
-		
+	public TelaRacas(String header) {
 		montaTable();
-		
 		this.setBounds(0,0,1200,600);
 		this.setVisible(false);
 	}
-	
+
+	@Override
 	public void montaTable() {
 		tableModel = getTableModel();
 		panelTable = new TablePage(tableModel);
 		panelTable.setBounds(0,0,1200,600);
 		this.add(panelTable);
 		montaBotoes();
-	}
-	
-	public EspeciesTableModel getTableModel() {
-		List<Especies> especie = new ArrayList<>();
-		try {
-			especie = EspeciesDao.get();
-		}catch(Exception e) {
-			
-		}
 		
-		EspeciesTableModel tableModel = new EspeciesTableModel(especie);
-		return tableModel;
+	}
+
+	@Override
+	public void remontaTable() {
+		this.setVisible(false);
+		this.removeAll();
+		this.montaTable();
+		this.setVisible(true);
 	}
 	
 	public void montaBotoes() {
@@ -67,7 +62,7 @@ public class TelaEspecies extends AbstractTela {
 				if (linhaEstaSelecionada(row)) {
 					String idStr = String.valueOf(tableModel.getValueAt(row, 0));
 					try{
-						EspeciesDao.delete(Integer.parseInt(idStr));
+						RacasDao.delete(Integer.parseInt(idStr));
 						remontaTable();
 					}catch(Exception error) {
 						
@@ -86,7 +81,6 @@ public class TelaEspecies extends AbstractTela {
 			public void actionPerformed(ActionEvent e) {
 				JTable tabela = panelTable.getTabela();
 				int row = tabela.getSelectedRow();
-				
 				if (linhaEstaSelecionada(row)) {
 					String idStr = String.valueOf(tableModel.getValueAt(row, 0));
 					try{
@@ -127,19 +121,10 @@ public class TelaEspecies extends AbstractTela {
 		});
 		this.add(btnFechar);
 	}
-
-	@Override
-	public void remontaTable() {
-		// TODO Auto-generated method stub
-		this.setVisible(false);
-		this.removeAll();
-		this.montaTable();
-		this.setVisible(true);
-	}
-
+	
 	@Override
 	public void abreTelaCadastro(Integer id) {
-		TelaEspeciesCadastro telaCadastro = new TelaEspeciesCadastro(id, this);
+		TelaRacasCadastro telaCadastro = new TelaRacasCadastro(id, this);
 		telaCadastro.addComponentListener(new ComponentListener() {
 			
 			@Override
@@ -157,6 +142,18 @@ public class TelaEspecies extends AbstractTela {
 		});
 		this.add(telaCadastro);
 		
+	}
+	
+	public RacasTableModel getTableModel() {
+		List<Racas> racas = new ArrayList<>();
+		try {
+			racas = RacasDao.get();
+		}catch(Exception e) {
+			
+		}
+		
+		tableModel = new RacasTableModel(racas);
+		return tableModel;
 	}
 	
 	private boolean linhaEstaSelecionada(int row) {

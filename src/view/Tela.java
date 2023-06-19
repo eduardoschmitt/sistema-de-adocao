@@ -24,12 +24,13 @@ public class Tela extends JFrame{
 	TelaEstado telaEstado = new TelaEstado("Estado");
 	TelaCidade telaCidade = new TelaCidade("Cidade");
 	TelaEspecies telaEspecies = new TelaEspecies("Especies");
-	
+	TelaRacas telaRacas = new TelaRacas("Racas");
 
 	public Tela() {
 		telas.add(telaEstado);
 		telas.add(telaCidade);
 		telas.add(telaEspecies);
+		telas.add(telaRacas);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -42,11 +43,11 @@ public class Tela extends JFrame{
 		menuBar = new JMenuBar();
 		JMenu menuEndereco = getMenu("Estado", telaEstado);
 		JMenu menuCidade = getMenu("Cidade", telaCidade);
-		JMenu menuCadastrar = getMenuCadastro("Cadastrar", telaEspecies);
-		
+		JMenu menuCadastrar = getMenuCadastro("Cadastrar", telaEspecies, telaRacas);
 		menuBar.add(menuEndereco);
 		menuBar.add(menuCidade);
 		menuBar.add(menuCadastrar);
+
 		setJMenuBar(menuBar);
 		
 		telaInicial = new JPanel();
@@ -62,6 +63,9 @@ public class Tela extends JFrame{
 		
 		telaEspecies.setBounds(0, 0, 1200, 600);
         telaInicial.add(telaEspecies);
+        
+        telaRacas.setBounds(0, 0, 1200, 600);
+        telaInicial.add(telaRacas);
 	}
 	
 	public JMenu getMenu(String texto, AbstractTela tela){
@@ -73,17 +77,19 @@ public class Tela extends JFrame{
 		return menu;
 	}
 	
-    public JMenu getMenuCadastro(String texto, AbstractTela tela) {
-        JMenu menu = new JMenu(texto);
-        JMenuItem item = new JMenuItem("Espécie");
-        JMenuItem item1 = new JMenuItem("Raça");
-        JMenuItem item2 = new JMenuItem("Pessoa");
-        item.addActionListener(getActionTela(tela));
-        menu.add(item);
-        menu.add(item1);
-        menu.add(item2);
-        return menu;
-    }
+	public JMenu getMenuCadastro(String texto, AbstractTela telaEspecies, AbstractTela telaRacas) {
+	    JMenu menu = new JMenu(texto);
+	    JMenuItem item = new JMenuItem("Espécie");
+	    JMenuItem item1 = new JMenuItem("Raça");
+	    
+	    item.addActionListener(getActionTela(telaEspecies));
+	    item1.addActionListener(getActionTela(telaRacas));
+	    
+	    menu.add(item);
+	    menu.add(item1);
+	    
+	    return menu;
+	}
 	
 	public ActionListener getActionTela(AbstractTela tela) {
 		ActionListener action = new ActionListener() {

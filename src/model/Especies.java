@@ -30,4 +30,9 @@ public class Especies {
 	public static String[] getColunas() {
 		return colunas;
 	}
+	
+	@Override
+	public String toString() {
+		return id + " - " + nome_especie;
+	}
 }
