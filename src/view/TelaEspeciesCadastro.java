@@ -53,8 +53,7 @@ public class TelaEspeciesCadastro extends JDialog {
 					Especies especies = new Especies(0, txtNome.getText());
 					try {
 						if (id != null) {
-							//EspeciesDao.update(id, especies);
-							System.out.println("caiu aqui");
+							EspeciesDao.update(id, especies);
 						} else {
 							EspeciesDao.insert(especies);
 						}

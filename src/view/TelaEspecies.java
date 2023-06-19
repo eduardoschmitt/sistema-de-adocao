@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -56,7 +57,7 @@ public class TelaEspecies extends AbstractTela {
 	}
 	
 	public void montaBotoes() {
-		btnExcluir = new JButton("Excluir Registro");
+		btnExcluir = new JButton("Excluir");
 		btnExcluir.setBounds(100,500, 100, 50);
 		btnExcluir.addActionListener(new ActionListener() {
 			@Override
@@ -65,7 +66,7 @@ public class TelaEspecies extends AbstractTela {
 				int row = tabela.getSelectedRow();
 				String idStr = String.valueOf(tableModel.getValueAt(row, 0));
 				try{
-					//CidadeDao.delete(Integer.parseInt(idStr));
+					EspeciesDao.delete(Integer.parseInt(idStr));
 					remontaTable();
 				}catch(Exception error) {
 					
@@ -74,24 +75,29 @@ public class TelaEspecies extends AbstractTela {
 		});
 		this.add(btnExcluir);
 		
-		btnAlterar = new JButton("Atualizar Registro");
+		btnAlterar = new JButton("Alterar");
 		btnAlterar.setBounds(250,500, 100, 50);
 		btnAlterar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTable tabela = panelTable.getTabela();
 				int row = tabela.getSelectedRow();
-				String idStr = String.valueOf(tableModel.getValueAt(row, 0));
-				try{
-					abreTelaCadastro(Integer.parseInt(idStr));
-				}catch(Exception error) {
+				
+				if (linhaEstaSelecionada(row)) {
+					String idStr = String.valueOf(tableModel.getValueAt(row, 0));
+					try{
+						abreTelaCadastro(Integer.parseInt(idStr));
+					}catch(Exception error) {
 
+					}
+				} else {
+					mostrarMensagemErro("Nenhuma linha selecionada");
 				}
 			}
 		});
 		this.add(btnAlterar);
 		
-		btnInserir = new JButton("Inserir Registro");
+		btnInserir = new JButton("Inserir");
 		btnInserir.setBounds(400,500, 100, 50);
 		btnInserir.addActionListener(new ActionListener() {
 			@Override
@@ -148,4 +154,13 @@ public class TelaEspecies extends AbstractTela {
 		this.add(telaCadastro);
 		
 	}
+	
+	private boolean linhaEstaSelecionada(int row) {
+	    return row != -1;
+	}
+	
+	private void mostrarMensagemErro(String message) {
+	    JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
+	}
+	
 }

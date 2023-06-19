@@ -42,15 +42,14 @@ public class EspeciesDao {
 		}
 	}
 	
-	public static void update(int id, Cidade cidade) throws Exception {
+	public static void update(int id, Especies especies) throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("update cidade set estado_id=?, nome=? where id=?");
-			st.setInt(1, cidade.getEstado().getId());
-			st.setString(2, cidade.getNome());
-			st.setInt(3, id);
+			st = connection.prepareStatement("update especies set nome_especie=? where id=?");
+			st.setString(1, especies.getNome_especie());
+			st.setInt(2, id);
 			st.execute();
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -59,6 +58,28 @@ public class EspeciesDao {
 				connection.close();
 			}
 			if(st!=null) {
+				System.out.println("Registro atualizado");
+				st.close();
+			}
+		}
+	}
+	
+	public static void delete(int id) throws Exception {
+		Connection connection = null;
+		PreparedStatement st = null;
+		try {
+			connection = Conexao.getConexao();
+			st = connection.prepareStatement("delete from especies where id=?");
+			st.setInt(1, id);
+			st.execute();
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			if(connection!=null) {
+				connection.close();
+			}
+			if(st!=null) {
+				System.out.println("Dado deletado.");
 				st.close();
 			}
 		}
