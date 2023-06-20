@@ -112,6 +112,7 @@ public class CidadeDao {
 			st.setInt(3, id);
 			st.execute();
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw new Exception(e);
 		}finally {
 			if(connection!=null) {
