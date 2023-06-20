@@ -23,11 +23,13 @@ public class Tela extends JFrame{
 	List<AbstractTela> telas = new ArrayList<>();
 	TelaEstado telaEstado = new TelaEstado("Estado");
 	TelaCidade telaCidade = new TelaCidade("Cidade");
+	TelaBairro telaBairro = new TelaBairro("Bairro");
 	
 
 	public Tela() {
 		telas.add(telaEstado);
 		telas.add(telaCidade);
+		telas.add(telaBairro);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
@@ -41,9 +43,11 @@ public class Tela extends JFrame{
 		menuBar = new JMenuBar();
 		JMenu menuEndereco = getMenu("Estado", telaEstado);
 		JMenu menuCidade = getMenu("Cidade", telaCidade);
+		JMenu menuBairro = getMenu("Bairro", telaBairro);
 		
 		menuBar.add(menuEndereco);
 		menuBar.add(menuCidade);
+		menuBar.add(menuBairro);
 		setJMenuBar(menuBar);
 		
 		telaInicial = new JPanel();
@@ -58,6 +62,9 @@ public class Tela extends JFrame{
 		
 		telaCidade.setBounds(0,0,1200,600);
 		telaInicial.add(telaCidade);
+		
+		telaBairro.setBounds(0, 0, 1200, 600);
+		telaInicial.add(telaBairro);
 	}
 	
 	public JMenu getMenu(String texto, AbstractTela tela){
