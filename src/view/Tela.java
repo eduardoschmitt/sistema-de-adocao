@@ -24,9 +24,10 @@ public class Tela extends JFrame{
 	TelaEstado telaEstado = new TelaEstado("Estado");
 	TelaCidade telaCidade = new TelaCidade("Cidade");
 	TelaBairro telaBairro = new TelaBairro("Bairro");
+	TelaPessoa telaPessoa = new TelaPessoa("Pessoa");
+	TelaDoacao telaDoacao = new TelaDoacao("Doação");
 	TelaEspecies telaEspecies = new TelaEspecies("Especies");
 	TelaRacas telaRacas = new TelaRacas("Racas");
-	TelaPessoa telaPessoa = new TelaPessoa("Pessoa");
 	TelaCor telaCor = new TelaCor("Cor");
 
 	public Tela() {
@@ -34,6 +35,7 @@ public class Tela extends JFrame{
 		telas.add(telaCidade);
 		telas.add(telaBairro);
 		telas.add(telaPessoa);
+		telas.add(telaDoacao);
 		telas.add(telaEspecies);
 		telas.add(telaRacas);
 		telas.add(telaCor);
@@ -60,6 +62,9 @@ public class Tela extends JFrame{
 		
 		JMenu menuPessoa = getMenu("Pessoa", telaPessoa);
 		menuBar.add(menuPessoa);
+		
+		JMenu menuDoacao = getMenu("Doação", telaDoacao);
+		menuBar.add(menuDoacao);
 		
 		JMenu menuEspecies = getMenu("Espécies", telaEspecies);
 		menuBar.add(menuEspecies);
@@ -88,6 +93,9 @@ public class Tela extends JFrame{
 
 		telaPessoa.setBounds(0, 0, 1200, 600);
 		telaInicial.add(telaPessoa);
+		
+		telaDoacao.setBounds(0, 0, 1200, 600);
+		telaInicial.add(telaDoacao);
 
 		telaCor.setBounds(0, 0, 1200, 600);
         telaInicial.add(telaCor);

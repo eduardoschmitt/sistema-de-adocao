@@ -21,6 +21,12 @@ public class Pessoa {
 		this.complemento = complemento;
 		this.bairro = bairro;
 	}
+	
+	public Pessoa(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -63,6 +69,9 @@ public class Pessoa {
 	public void setBairro(Bairro bairro) {
 		this.bairro = bairro;
 	}
-	
+	@Override
+	public String toString() {
+		return nome;
+	}
 	
 }
