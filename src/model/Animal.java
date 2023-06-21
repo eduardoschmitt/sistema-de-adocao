@@ -24,6 +24,11 @@ public class Animal {
 		this.nascimento = nascimento;
 	}
 	
+	public Animal(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -73,5 +78,10 @@ public class Animal {
 		this.nascimento = nascimento;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return nome;
+	}
 	
 }
