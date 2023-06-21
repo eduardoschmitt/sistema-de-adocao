@@ -34,7 +34,7 @@ CREATE TABLE `adocoes` (
   KEY `ID_adotante` (`ID_Pessoa`),
   CONSTRAINT `adoções_ibfk_1` FOREIGN KEY (`ID_Animal`) REFERENCES `animais` (`ID`),
   CONSTRAINT `adoções_ibfk_2` FOREIGN KEY (`ID_Pessoa`) REFERENCES `pessoa` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `adocoes` (
 
 LOCK TABLES `adocoes` WRITE;
 /*!40000 ALTER TABLE `adocoes` DISABLE KEYS */;
-INSERT INTO `adocoes` VALUES (6,1,1,'2023-05-01'),(7,2,2,'2023-05-02'),(8,3,3,'2023-05-03');
+INSERT INTO `adocoes` VALUES (6,10,6,'2023-05-01'),(7,9,6,'2023-05-02'),(9,7,8,'2023-06-21'),(10,8,8,'2023-06-21');
 /*!40000 ALTER TABLE `adocoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +61,6 @@ CREATE TABLE `animais` (
   `Descricao` text,
   `ID_Cor` int NOT NULL,
   `ID_Raca` int NOT NULL,
-  `Adotado` tinyint NOT NULL,
   `Nascimento` date NOT NULL DEFAULT (curdate()),
   PRIMARY KEY (`ID`,`ID_Cor`,`ID_Raca`),
   KEY `fk_animais_cores1_idx` (`ID_Cor`),
@@ -77,7 +76,7 @@ CREATE TABLE `animais` (
 
 LOCK TABLES `animais` WRITE;
 /*!40000 ALTER TABLE `animais` DISABLE KEYS */;
-INSERT INTO `animais` VALUES (6,'Rex','Macho','Cachorro brincalhão e amoroso',6,6,0,'2020-10-10'),(7,'Luna','Fêmea','Gatinha tranquila e carinhosa',6,6,0,'2020-10-10'),(8,'Bolinha','Macho','Coelhinho dócil e brincalhão',6,6,0,'2020-10-10'),(9,'Frajola','Macho','Hamster curioso e ativo',6,6,0,'2020-10-10'),(10,'Piolho','Fêmea','Canário cantor e colorido',6,6,0,'2020-10-10');
+INSERT INTO `animais` VALUES (6,'Rex','Macho','Cachorro brincalhão e amoroso',6,6,'2020-10-10'),(7,'Luna','Fêmea','Gatinha tranquila e carinhosa',6,6,'2020-10-10'),(8,'Bolinha','Macho','Coelhinho dócil e brincalhão',6,6,'2020-10-10'),(9,'Frajola','Macho','Hamster curioso e ativo',6,6,'2020-10-10'),(10,'Piolho','Fêmea','Canário cantor e colorido',6,6,'2020-10-10');
 /*!40000 ALTER TABLE `animais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -329,4 +328,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-21  3:03:03
+-- Dump completed on 2023-06-21  3:57:12
