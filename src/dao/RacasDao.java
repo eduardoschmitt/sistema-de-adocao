@@ -39,6 +39,35 @@ public class RacasDao {
 		}
 	}
 	
+	public static List<Racas> get(int idEspecie) throws Exception {
+		Connection connection = null;
+		PreparedStatement st = null;
+		try {
+			connection = Conexao.getConexao();
+			List<Racas> raca = new ArrayList<>();
+			st = connection.prepareStatement("select ra.id, ra.nome, esp.nome_especie, esp.id idEspecie from racas ra "
+					+ " left join especies esp on ra.id_especies = esp.id "
+					+ " where id_especies=?");
+			st.setInt(1, idEspecie);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Especies especies = new Especies(rs.getInt("idEspecie"), rs.getString("Nome_Especie"));
+				Racas racas = new Racas(rs.getInt("id"), especies, rs.getString("nome"));
+				raca.add(racas);
+			}
+			return raca;
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			if(connection!=null) {
+				connection.close();
+			}
+			if(st!=null) {
+				st.close();
+			}
+		}
+	}
+	
 	public static void delete(int id) throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;

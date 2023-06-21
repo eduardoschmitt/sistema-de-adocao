@@ -29,6 +29,7 @@ public class Tela extends JFrame{
 	TelaEspecies telaEspecies = new TelaEspecies("Especies");
 	TelaRacas telaRacas = new TelaRacas("Racas");
 	TelaCor telaCor = new TelaCor("Cor");
+	TelaAnimal telaAnimal = new TelaAnimal("Animal");
 
 	public Tela() {
 		telas.add(telaEstado);
@@ -39,6 +40,7 @@ public class Tela extends JFrame{
 		telas.add(telaEspecies);
 		telas.add(telaRacas);
 		telas.add(telaCor);
+		telas.add(telaAnimal);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setTitle("Adoção");
@@ -74,7 +76,10 @@ public class Tela extends JFrame{
 		
 		JMenu menuCor = getMenu("Cor", telaCor);
 		menuBar.add(menuCor);
-
+		
+		JMenu menuAnimal = getMenu("Animal", telaAnimal);
+		menuBar.add(menuAnimal);
+		
 		setJMenuBar(menuBar);
 		
 		telaInicial = new JPanel();
@@ -105,6 +110,9 @@ public class Tela extends JFrame{
         
         telaRacas.setBounds(0, 0, 1200, 600);
         telaInicial.add(telaRacas);
+        
+        telaAnimal.setBounds(0, 0, 1200, 600);
+        telaInicial.add(telaAnimal);
         
 	}
 	
