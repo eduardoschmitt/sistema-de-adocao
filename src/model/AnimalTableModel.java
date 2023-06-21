@@ -9,7 +9,7 @@ public class AnimalTableModel extends AbstractTableModel{
 	private static final long serialVersionUID = 1L;
 	
 	private List<Animal> lista;
-    private String[] colunas = {"id", "Nome", "Sexo", "Descricao", "Cor", "Raça", "Espécie", "Adotado", "Nascimento"};
+    private String[] colunas = {"id", "Nome", "Sexo", "Descricao", "Cor", "Raça", "Espécie", "Nascimento", "Adotado"};
 
     public AnimalTableModel(List<Animal> lista) {
         this.lista = lista;
@@ -49,11 +49,11 @@ public class AnimalTableModel extends AbstractTableModel{
             case 5:
             	return objeto.getRaca();
             case 6:
-            	return objeto.isAdotado();
-            case 7:
             	return objeto.getRaca().getEspecies();
-            case 8:
+            case 7:
             	return objeto.getNascimento();
+            case 8:
+            	return objeto.isAdotado();
             default:
                 return null;
         }

@@ -22,9 +22,10 @@ public class AnimalDao {
 			connection = Conexao.getConexao();
 			List<Animal> animais = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT a.id, a.nome nomeAnimal, a.sexo, a.descricao, a.adotado, a.nascimento, ");
+			sb.append("SELECT a.id, a.nome nomeAnimal, a.sexo, a.descricao, a.nascimento, ");
 			sb.append("c.id idCor, c.nome nomeCor, ");
 			sb.append("r.id idRaca, r.nome nomeRaca, ");
+			sb.append("(select coalesce(1,0) from adocoes adoc where adoc.id_animal=a.id) as adotado, ");
 			sb.append("e.id idEspecie, e.nome_especie nomeEspecie ");
 			sb.append("FROM animais a ");
 			sb.append("left join cores c on c.id = a.id_cor ");
@@ -37,7 +38,7 @@ public class AnimalDao {
 				Racas raca = new Racas(rs.getInt("idRaca"), especie, rs.getString("nomeRaca"));
 				Cor cor = new Cor(rs.getInt("idCor"), rs.getString("nomeCor"));
 				Animal animal = new Animal(rs.getInt("id"), rs.getString("nomeAnimal"), rs.getString("sexo"), 
-						rs.getString("descricao"), cor, raca, rs.getBoolean("adotado"), rs.getDate("nascimento"));
+						rs.getString("descricao"), cor, raca, rs.getDate("nascimento"), rs.getBoolean("adotado"));
 				animais.add(animal);
 			}
 			return animais;
@@ -76,7 +77,7 @@ public class AnimalDao {
 				Racas raca = new Racas(rs.getInt("idRaca"), especie, rs.getString("nomeRaca"));
 				Cor cor = new Cor(rs.getInt("idCor"), rs.getString("nomeCor"));
 				Animal animal = new Animal(rs.getInt("id"), rs.getString("nomeAnimal"), rs.getString("sexo"), 
-						rs.getString("descricao"), cor, raca, rs.getBoolean("adotado"), rs.getDate("nascimento"));
+						rs.getString("descricao"), cor, raca, rs.getDate("nascimento"), false);
 				animais.add(animal);
 			}
 			return animais;
@@ -118,14 +119,13 @@ public class AnimalDao {
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("insert into animais (nome, sexo, descricao, id_cor, id_raca, adotado, nascimento) values (?,?,?,?,?,?,?)");
+			st = connection.prepareStatement("insert into animais (nome, sexo, descricao, id_cor, id_raca, nascimento) values (?,?,?,?,?,?)");
 			st.setString(1, animal.getNome());
 			st.setString(2, animal.getSexo());
 			st.setString(3, animal.getDescricao());
 			st.setInt(4, animal.getCor().getId());
 			st.setInt(5, animal.getRaca().getId());
-			st.setBoolean(6, animal.isAdotado());
-			st.setDate(7, animal.getNascimento());
+			st.setDate(6, animal.getNascimento());
 			st.execute();
 		}catch(Exception e) {
 			throw new Exception(e);
@@ -137,15 +137,14 @@ public class AnimalDao {
 		PreparedStatement st = null;
 		try {
 			connection = Conexao.getConexao();
-			st = connection.prepareStatement("update animais set nome=?, sexo=?, descricao=?, id_cor=?, id_raca=?, adotado=?, nascimento=? where id=?");
+			st = connection.prepareStatement("update animais set nome=?, sexo=?, descricao=?, id_cor=?, id_raca=?, nascimento=? where id=?");
 			st.setString(1, animal.getNome());
 			st.setString(2, animal.getSexo());
 			st.setString(3, animal.getDescricao());
 			st.setInt(4, animal.getCor().getId());
 			st.setInt(5, animal.getRaca().getId());
-			st.setBoolean(6, animal.isAdotado());
-			st.setDate(7, animal.getNascimento());
-			st.setInt(8, id);
+			st.setDate(6, animal.getNascimento());
+			st.setInt(7, id);
 			st.execute();
 		}catch(Exception e) {
 			e.printStackTrace();

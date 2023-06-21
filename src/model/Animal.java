@@ -9,19 +9,19 @@ public class Animal {
 	private String descricao;
 	private Cor cor;
 	private Racas raca;
-	private boolean adotado;
 	private Date nascimento;
+	private boolean adotado;
 	
-	public Animal(int id, String nome, String sexo, String descricao, Cor cor, Racas raca, boolean adotado,
-			Date nascimento) {
+	public Animal(int id, String nome, String sexo, String descricao, Cor cor, Racas raca,
+			Date nascimento, boolean adotado) {
 		this.id = id;
 		this.nome = nome;
 		this.sexo = sexo;
 		this.descricao = descricao;
 		this.cor = cor;
 		this.raca = raca;
-		this.adotado = adotado;
 		this.nascimento = nascimento;
+		this.setAdotado(adotado);
 	}
 	
 	public Animal(int id, String nome) {
@@ -65,12 +65,6 @@ public class Animal {
 	public void setRaca(Racas raca) {
 		this.raca = raca;
 	}
-	public boolean isAdotado() {
-		return adotado;
-	}
-	public void setAdotado(boolean adotado) {
-		this.adotado = adotado;
-	}
 	public Date getNascimento() {
 		return nascimento;
 	}
@@ -82,6 +76,14 @@ public class Animal {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return nome;
+	}
+
+	public boolean isAdotado() {
+		return adotado;
+	}
+
+	public void setAdotado(boolean adotado) {
+		this.adotado = adotado;
 	}
 	
 }

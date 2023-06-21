@@ -160,7 +160,7 @@ public class TelaAnimalCadastro extends JDialog {
 					Calendar calendar = Calendar.getInstance();
 					Cor cor = (Cor) cbxCor.getSelectedItem();
 					Racas raca = (Racas) cbxRaca.getSelectedItem();
-					Animal animal = new Animal(0, txtNome.getText(), txtSexo.getText(), txtDescricao.getText(), cor, raca, false, new Date(calendar.getTimeInMillis())); 
+					Animal animal = new Animal(0, txtNome.getText(), txtSexo.getText(), txtDescricao.getText(), cor, raca, new Date(calendar.getTimeInMillis()), false); 
 					try {
 						if (id != null) {
 							AnimalDao.update(id, animal);
