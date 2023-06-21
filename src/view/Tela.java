@@ -27,14 +27,16 @@ public class Tela extends JFrame{
 	TelaEspecies telaEspecies = new TelaEspecies("Especies");
 	TelaRacas telaRacas = new TelaRacas("Racas");
 	TelaPessoa telaPessoa = new TelaPessoa("Pessoa");
+	TelaCor telaCor = new TelaCor("Cor");
 
 	public Tela() {
 		telas.add(telaEstado);
 		telas.add(telaCidade);
 		telas.add(telaBairro);
+		telas.add(telaPessoa);
 		telas.add(telaEspecies);
 		telas.add(telaRacas);
-		telas.add(telaPessoa);
+		telas.add(telaCor);
 		setLayout(null);
 		this.setBounds(0, 0, 1200, 600);
 		this.setTitle("Adoção");
@@ -46,8 +48,9 @@ public class Tela extends JFrame{
 	public void carregarTelas() {
 		
 		menuBar = new JMenuBar();
-		JMenu menuEndereco = getMenu("Estado", telaEstado);
-		menuBar.add(menuEndereco);
+		
+		JMenu menuEstado = getMenu("Estado", telaEstado);
+		menuBar.add(menuEstado);
 		
 		JMenu menuCidade = getMenu("Cidade", telaCidade);
 		menuBar.add(menuCidade);
@@ -57,11 +60,15 @@ public class Tela extends JFrame{
 		
 		JMenu menuPessoa = getMenu("Pessoa", telaPessoa);
 		menuBar.add(menuPessoa);
-
-		JMenu menuCadastrar = getMenuCadastro("Cadastrar", telaEspecies, telaRacas);
-		menuBar.add(menuEndereco);
-		menuBar.add(menuCidade);
-		menuBar.add(menuCadastrar);
+		
+		JMenu menuEspecies = getMenu("Espécies", telaEspecies);
+		menuBar.add(menuEspecies);
+		
+		JMenu menuRaca = getMenu("Raça", telaRacas);
+		menuBar.add(menuRaca);
+		
+		JMenu menuCor = getMenu("Cor", telaCor);
+		menuBar.add(menuCor);
 
 		setJMenuBar(menuBar);
 		
@@ -78,15 +85,19 @@ public class Tela extends JFrame{
 		
 		telaBairro.setBounds(0, 0, 1200, 600);
 		telaInicial.add(telaBairro);
-		
+
 		telaPessoa.setBounds(0, 0, 1200, 600);
 		telaInicial.add(telaPessoa);
+
+		telaCor.setBounds(0, 0, 1200, 600);
+        telaInicial.add(telaCor);
 
 		telaEspecies.setBounds(0, 0, 1200, 600);
         telaInicial.add(telaEspecies);
         
         telaRacas.setBounds(0, 0, 1200, 600);
         telaInicial.add(telaRacas);
+        
 	}
 	
 	public JMenu getMenu(String texto, AbstractTela tela){
@@ -96,20 +107,6 @@ public class Tela extends JFrame{
 		menu.add(item);
 		
 		return menu;
-	}
-	
-	public JMenu getMenuCadastro(String texto, AbstractTela telaEspecies, AbstractTela telaRacas) {
-	    JMenu menu = new JMenu(texto);
-	    JMenuItem item = new JMenuItem("Espécie");
-	    JMenuItem item1 = new JMenuItem("Raça");
-	    
-	    item.addActionListener(getActionTela(telaEspecies));
-	    item1.addActionListener(getActionTela(telaRacas));
-	    
-	    menu.add(item);
-	    menu.add(item1);
-	    
-	    return menu;
 	}
 	
 	public ActionListener getActionTela(AbstractTela tela) {
