@@ -44,6 +44,41 @@ public class BairroDao {
 		}
 	}
 	
+	public static List<Bairro> get(int id) throws Exception {
+		Connection connection = null;
+		PreparedStatement st = null;
+		try {
+			connection = Conexao.getConexao();
+			List<Bairro> bairros = new ArrayList<>();
+			StringBuilder sb = new StringBuilder();
+			sb.append("select bai.id, bai.nome nomeBairro, cid.nome nomeCidade, est.sigla, est.nome nomeEstado, cid.estado_id, bai.id_cidade from bairro bai ");
+			sb.append(" left join cidade cid on bai.id_cidade=cid.id ");
+			sb.append("left join estado est on cid.Estado_id = est.id ");
+			sb.append("where bai.id=?");
+			
+			st = connection.prepareStatement(sb.toString());
+			st.setInt(1, id);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Estado estado = new Estado(rs.getInt("estado_id"), rs.getString("sigla"), rs.getString("nomeEstado"));
+				Cidade cidade = new Cidade(rs.getInt("id_cidade"), estado, rs.getString("nomeCidade"));
+				Bairro bairro = new Bairro(rs.getInt("id"), rs.getString("nomeBairro"), cidade, estado);
+				
+				bairros.add(bairro);
+			}
+			return bairros;
+		}catch(Exception e) {
+			throw new Exception(e);
+		}finally {
+			if(connection!=null) {
+				connection.close();
+			}
+			if(st!=null) {
+				st.close();
+			}
+		}
+	}
+	
 	public static void delete(int id) throws Exception {
 		Connection connection = null;
 		PreparedStatement st = null;
