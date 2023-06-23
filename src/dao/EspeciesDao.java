@@ -3,8 +3,11 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import conexao.Conexao;
 import model.Cidade;
@@ -72,8 +75,17 @@ public class EspeciesDao {
 			st = connection.prepareStatement("delete from especies where id=?");
 			st.setInt(1, id);
 			st.execute();
-		}catch(Exception e) {
-			throw new Exception(e);
+	    } catch (SQLException e) {
+	        String mensagem = "";
+	        if (e.getErrorCode() == 1451) {
+	            mensagem = "Não foi possível excluir o registro porque está sendo referenciado por outra tabela.";
+	        } else {
+	            mensagem = "Ocorreu um erro durante a exclusão do registro.";
+	        }
+	        JOptionPane.showMessageDialog(null, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+	        throw new Exception(e);
+	    } catch (Exception e) {
+	        throw new Exception(e);
 		}finally {
 			if(connection!=null) {
 				connection.close();

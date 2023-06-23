@@ -35,6 +35,7 @@ public class TelaAnimalCadastro extends JDialog {
 	JTextField txtNome;
 	JLabel lblSexo;
 	JTextField txtSexo;
+	JComboBox cbxSexo;
 	JLabel lblDescricao;
 	JTextField txtDescricao;
 	JLabel lblCor;
@@ -70,9 +71,14 @@ public class TelaAnimalCadastro extends JDialog {
 		lblSexo.setBounds(10, 70, 70, 20);
 		this.add(lblSexo);
 
-		txtSexo = new JTextField();
+		/*txtSexo = new JTextField();
 		txtSexo.setBounds(100, 70, 150, 20);
-		this.add(txtSexo);
+		this.add(txtSexo);*/
+		
+		String[] generos = {"Masculino", "Feminino"};
+		cbxSexo = new JComboBox(generos);
+		cbxSexo.setBounds(100, 70, 150, 20);
+		this.add(cbxSexo);
 		
 		lblDescricao = new JLabel("Descrição");
 		lblDescricao.setBounds(10, 100, 70, 20);
@@ -158,9 +164,10 @@ public class TelaAnimalCadastro extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if (txtNome.getText() != null && !txtNome.getText().equals("")) {
 					Calendar calendar = Calendar.getInstance();
+					String sexo = (String) cbxSexo.getSelectedItem();
 					Cor cor = (Cor) cbxCor.getSelectedItem();
 					Racas raca = (Racas) cbxRaca.getSelectedItem();
-					Animal animal = new Animal(0, txtNome.getText(), txtSexo.getText(), txtDescricao.getText(), cor, raca, new Date(calendar.getTimeInMillis()), false); 
+					Animal animal = new Animal(0, txtNome.getText(), sexo, txtDescricao.getText(), cor, raca, new Date(calendar.getTimeInMillis()), false); 
 					try {
 						if (id != null) {
 							AnimalDao.update(id, animal);
