@@ -64,7 +64,7 @@ public class AnimalDao {
 			connection = Conexao.getConexao();
 			List<Animal> animais = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT a.id, a.nome nomeAnimal, a.sexo, a.descricao, a.adotado, a.nascimento, ");
+			sb.append("SELECT a.id, a.nome nomeAnimal, a.sexo, a.descricao, a.nascimento, ");
 			sb.append("c.id idCor, c.nome nomeCor, ");
 			sb.append("r.id idRaca, r.nome nomeRaca, ");
 			sb.append("e.id idEspecie, e.nome_especie nomeEspecie ");
